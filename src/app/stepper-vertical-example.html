@@ -1,13 +1,16 @@
-<button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
-  {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
-</button>
-<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+<h1>Crear Test Case</h1>
+<mat-stepper #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Introducir Issue de JIRA</ng-template>
+      <ng-template matStepLabel>Titulo</ng-template>
       <mat-form-field appearance="fill">
-        <mat-label>Issue en JIRA</mat-label>
-        <input matInput placeholder="ECDY0578" formControlName="firstCtrl" required>
+        <mat-label>Titulo</mat-label>
+        <input
+          matInput
+          placeholder="ECDY0578"
+          formControlName="firstCtrl"
+          required
+        />
       </mat-form-field>
       <div>
         <button mat-button matStepperOK>OK</button>
@@ -16,11 +19,10 @@
   </mat-step>
   <mat-step [stepControl]="secondFormGroup">
     <form [formGroup]="secondFormGroup">
-      <ng-template matStepLabel>Introducir Test Manager ID</ng-template>
+      <ng-template matStepLabel>Descripcion</ng-template>
       <mat-form-field appearance="fill">
-        <mat-label>Test Manager TestID</mat-label>
-        <input matInput formControlName="secondCtrl" placeholder="ECDY0982"
-               required>
+        <mat-label>Descripcion</mat-label>
+        <textarea matInput required></textarea>
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Atrás</button>
@@ -29,87 +31,102 @@
     </form>
   </mat-step>
 
-
   <mat-step>
-    <ng-template matStepLabel>Introducir información adicional</ng-template>
-    <p>Given / When / And</p>
-    <mat-form-field appearance="fill">
-      <mat-label>Descripción</mat-label>
-      <textarea #input maxlength="1000" matNativeControl required></textarea>
-      <mat-hint align="end">{{input.value.length}}/10</mat-hint>
-    </mat-form-field>
-    <p>Then</p>
-    <mat-form-field appearance="outline">
-      <mat-label>Resultado</mat-label>
-      <textarea #input maxlength="1000" matNativeControl required></textarea>
-      <mat-hint align="end">{{input.value.length}}/10</mat-hint>
-    </mat-form-field>
+    <ng-template matStepLabel>Datos Globales</ng-template>
+    <h2>Introducir Datos</h2>
     <div (click)="uploadFile.click()">
-      <button mat-raised-button color="primary">Adjuntar Fichero</button>
-      <input #uploadFile (change)="upload($event)" type='file' style="display:none"/> 
-   </div>
+      <button mat-raised-button color="primary">Importar</button>
+      <input
+        #uploadFile
+        (change)="upload($event)"
+        type="file"
+        style="display: none"
+      />
+    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Clave</mat-label>
+      <input matInput required />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Valor</mat-label>
+      <input matInput required />
+    </mat-form-field>
+    <button mat-fab extended color="primary">
+      <mat-icon>save</mat-icon>
+      Añadir Dato
+    </button>
+    <p></p>
+    <h2>Lista de Datos</h2>
+    <table>
+      <tr>
+        <th>Clave</th>
+        <th>Valor</th>
+      </tr>
+      <tr>
+        <td>Alfreds Futterkiste</td>
+        <td>Maria Anders</td>
+      </tr>
+      <tr>
+        <td>Centro comercial Moctezuma</td>
+        <td>Francisco Chang</td>
+      </tr>
+    </table>
+    <p></p>
     <div>
       <button mat-button matStepperPrevious>Atrás</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
     </div>
   </mat-step>
-
 
   <mat-step>
-    <ng-template matStepLabel>Crear o Importar Test Case</ng-template>
-    <a  mat-stroked-button href="https://www.google.com/" target="_blank">Crear Nuevo Test</a>
-    <p></p>
-    <button mat-raised-button color="primary">Importar Test Case </button>
+    <ng-template matStepLabel>Steps</ng-template>
+    <h2>Lista de Test Cases</h2>
+    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+     <div class="example-box" *ngFor="let test of tests" cdkDrag>
+      {{test.title}}
+     </div>
+    </div>
+    <button mat-raised-button color="primary">Importar Test Case</button>
     <div>
       <button mat-button matStepperPrevious>Atrás</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
     </div>
   </mat-step>
-
 
   <mat-step>
     <ng-template matStepLabel>Hecho</ng-template>
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          JIRA Issue
-        </mat-panel-title>
-        <mat-panel-description>
-          ECDY-23423
-        </mat-panel-description>
+        <mat-panel-title> JIRA Issue </mat-panel-title>
+        <mat-panel-description> ECDY-23423 </mat-panel-description>
       </mat-expansion-panel-header>
       <p>This is the primary content of the panel.</p>
     </mat-expansion-panel>
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          Test Manager ID
-        </mat-panel-title>
-        <mat-panel-description>
-          TST-ECDY-4567
-        </mat-panel-description>
+        <mat-panel-title> Test Manager ID </mat-panel-title>
+        <mat-panel-description> TST-ECDY-4567 </mat-panel-description>
       </mat-expansion-panel-header>
       <p>This is the primary content of the panel.</p>
     </mat-expansion-panel>
-    <mat-expansion-panel (opened)="panelOpenState = true"
-                       (closed)="panelOpenState = false">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Información Adicional
-      </mat-panel-title>
-      <mat-panel-description>
-       {{panelOpenState ? 'Si' : 'Si'}}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <p>I'm visible because I am open</p>
-  </mat-expansion-panel>
+    <mat-expansion-panel
+      (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title> Información Adicional </mat-panel-title>
+        <mat-panel-description>
+          {{panelOpenState ? 'Si' : 'Si'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>I'm visible because I am open</p>
+    </mat-expansion-panel>
     <div>
       <button mat-button matStepperPrevious>Guardar</button>
       <button mat-button (click)="stepper.reset()">Cancelar</button>
     </div>
   </mat-step>
 </mat-stepper>
-
 
 <!-- Copyright 2023 Google LLC. All Rights Reserved.
     Use of this source code is governed by an MIT-style license that
