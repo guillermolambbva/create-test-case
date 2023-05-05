@@ -1,4 +1,8 @@
 <h1>Crear Test Case</h1>
+<button mat-fab extended color="primary">
+  <mat-icon>input</mat-icon>
+  Importar
+</button>
 <mat-stepper #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
@@ -80,13 +84,26 @@
 
   <mat-step>
     <ng-template matStepLabel>Steps</ng-template>
-    <h2>Lista de Test Cases</h2>
+    <h2>Añadir Step</h2>
+    <mat-form-field appearance="fill">
+      <mat-label>Acciones</mat-label>
+      <textarea matInput></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Datos</mat-label>
+      <textarea matInput></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Resultado</mat-label>
+      <textarea matInput></textarea>
+    </mat-form-field>
+    <button mat-raised-button color="primary">Añadir Step</button>
+    <h2>Lista de Steps</h2>
     <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-     <div class="example-box" *ngFor="let test of tests" cdkDrag>
-      {{test.title}}
-     </div>
+      <div class="example-box" *ngFor="let test of tests" cdkDrag>
+        {{test.title}}
+      </div>
     </div>
-    <button mat-raised-button color="primary">Importar Test Case</button>
     <div>
       <button mat-button matStepperPrevious>Atrás</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
@@ -97,14 +114,14 @@
     <ng-template matStepLabel>Hecho</ng-template>
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
-        <mat-panel-title> JIRA Issue </mat-panel-title>
+        <mat-panel-title> Titulo </mat-panel-title>
         <mat-panel-description> ECDY-23423 </mat-panel-description>
       </mat-expansion-panel-header>
       <p>This is the primary content of the panel.</p>
     </mat-expansion-panel>
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
-        <mat-panel-title> Test Manager ID </mat-panel-title>
+        <mat-panel-title> Descripcion</mat-panel-title>
         <mat-panel-description> TST-ECDY-4567 </mat-panel-description>
       </mat-expansion-panel-header>
       <p>This is the primary content of the panel.</p>
@@ -114,7 +131,7 @@
       (closed)="panelOpenState = false"
     >
       <mat-expansion-panel-header>
-        <mat-panel-title> Información Adicional </mat-panel-title>
+        <mat-panel-title> Lista de Steps</mat-panel-title>
         <mat-panel-description>
           {{panelOpenState ? 'Si' : 'Si'}}
         </mat-panel-description>
